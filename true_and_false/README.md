@@ -10,8 +10,8 @@ Implemention from Chapter 1 of [_Command-Line Rust_](https://learning.oreilly.co
 ## Usage
 
 ```
-  $ cargo run --quiet --bin true; echo $?
-  $ cargo run --quiet --bin false; echo $?
+  $ cargo run --quiet --bin true_rust; echo $?
+  $ cargo run --quiet --bin false_rust; echo $?
 ```
 
 ## Tests
@@ -23,12 +23,12 @@ Run all tests:
 
 Run test for `true` executable:
 ```
-  $ cargo test --quiet --bin true
+  $ cargo test --quiet --bin true_rust
 ```
 
 Run test for `false` executable:
 ```
-  $ cargo test --quiet --bin false
+  $ cargo test --quiet --bin false_rust
 ```
 
 

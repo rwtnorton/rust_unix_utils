@@ -9,13 +9,13 @@ fn test_hello_world() {
 
 #[test]
 fn test_true() {
-    let mut cmd = Command::cargo_bin("true").unwrap();
+    let mut cmd = Command::cargo_bin("true_rust").unwrap();
     cmd.assert().success();
 }
 
 #[test]
 fn test_false() {
-    let mut cmd = Command::cargo_bin("false").unwrap();
+    let mut cmd = Command::cargo_bin("false_rust").unwrap();
     cmd.assert().failure();
 }
 
