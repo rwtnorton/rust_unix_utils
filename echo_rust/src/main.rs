@@ -1,18 +1,17 @@
-use clap::{Arg, ArgAction, Command};
-
-// #[derive(Parser, Debug)]
-// #[command(version, about, long_about = None)]
-// struct Cli {
-//     /// Do not print the trailing newline character
-//     #[arg(short, default_value_t = false)]
-//     n: bool,
-// }
+use clap::{Arg, ArgAction, ArgMatches, Command};
 
 fn main() {
-    println!("Hello, world!");
-    // let cli = Cli::parse();
-    let matches = Command::new("echo_rust")
+    let matches = cli().get_matches();
+    let args = Args::from_matches(&matches);
+    println!("args: {:#?}", args);
+    println!("omit_newline: {}", args.omit_newline);
+    println!("arguments: {:?}", args.arguments);
+}
+
+fn cli() -> Command {
+    Command::new("echo_rust")
         .bin_name("echo_rust")
+        .about("write arguments to the standard output")
         .arg(
             Arg::new("text")
                 .value_name("TEXT")
@@ -27,14 +26,24 @@ fn main() {
                 .short('n')
                 .action(ArgAction::SetTrue),
         )
-        .get_matches();
-    // println!("{:?}", cli);
-    println!("{:?}", matches);
-    let omit_newline = matches.get_flag("omit_newline");
-    println!("omit_newline? {}", omit_newline);
-    let arguments: Vec<&String> = match matches.get_occurrences("text") {
-        Some(occ) => occ.flat_map(|hmm| hmm.into_iter()).collect(),
-        None => vec![],
-    };
-    println!("text: {:#?}", arguments);
+}
+
+#[derive(Debug)]
+struct Args<'a> {
+    omit_newline: bool,
+    arguments: Vec<&'a String>,
+}
+
+impl<'a> Args<'a> {
+    pub fn from_matches(matches: &'a ArgMatches) -> Self {
+        let omit_newline = matches.get_flag("omit_newline");
+        let arguments: Vec<&String> = match matches.get_occurrences("text") {
+            Some(occ) => occ.flat_map(|hmm| hmm.into_iter()).collect(),
+            None => vec![],
+        };
+        Args {
+            omit_newline,
+            arguments,
+        }
+    }
 }
