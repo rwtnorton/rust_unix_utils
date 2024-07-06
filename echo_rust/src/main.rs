@@ -3,9 +3,13 @@ use clap::{Arg, ArgAction, ArgMatches, Command};
 fn main() {
     let matches = cli().get_matches();
     let args = Args::from_matches(&matches);
-    println!("args: {:#?}", args);
-    println!("omit_newline: {}", args.omit_newline);
-    println!("arguments: {:?}", args.arguments);
+    // println!("args: {:#?}", args);
+    // println!("omit_newline: {}", args.omit_newline);
+    // println!("arguments: {:?}", args.arguments);
+
+    let ending = if args.omit_newline { "" } else { "\n" };
+    let strings: Vec<String> = args.arguments.iter().map(|&s| s.to_string()).collect();
+    print!("{}{}", strings.join(" "), ending);
 }
 
 fn cli() -> Command {
